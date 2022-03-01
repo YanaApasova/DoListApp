@@ -1,7 +1,7 @@
 # DoListApp
 
-App was written using XCode 13.2.1 and Swift 5.5 version
-Tested on iPhone 11 pro max, physical device
+App was written using XCode 13.2.1 and Swift 5.5 version.
+ Tested on iPhone 11 pro max, physical device
 
 The aim was to create easy and functional to do list app, using CoreData.
 
@@ -10,7 +10,7 @@ The aim was to create easy and functional to do list app, using CoreData.
 
 <img src="https://user-images.githubusercontent.com/98092825/156225250-fc995ed9-8d46-431a-802d-553b5807d3cc.PNG" width="200" height="400">
 
-The main screen is represented by UITableView with headerView.The headerView contains today lable and current date.
+The main screen is represented by UITableView with headerView. The headerView contains today lable and current date.
 When the tableView is empty there is a placeholder.
 Also at the bottom of the screen there is an add round button.
 
@@ -27,7 +27,7 @@ User aslo required to choose date and add task text.
 
 2) create new task screen 
 
-When button is tapped, user can create new task in the new VC and save it.When saving is succesful, proper window occurs.After that yser is redirected to the main screen.It also can be done using CANCEL button.
+When button is tapped, user can create new task in the new VC and save it. When saving is succesful, proper window occurs.After that yser is redirected to the main screen. It also can be done using CANCEL button.
 
 Keyboard doesn't overlapping textfield, when tapped.
 
@@ -43,6 +43,6 @@ Deleting items is done by left swipe with a proper confiration window
 <img src="https://user-images.githubusercontent.com/98092825/156230382-9b932d6e-a931-4d40-824f-c94a085c1bfa.jpeg" width="200" height="400">
 
 
-Next commit plans: bug fixes, searchbar on the top of the main screen, animation integation (Lottie pod)
+Next commit plans: bug fixes, searchbar on the top of the main screen, animation integration (Lottie pod)
 
 
