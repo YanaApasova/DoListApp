@@ -43,6 +43,6 @@ Deleting items is done by left swipe with a proper confiration window
 <img src="https://user-images.githubusercontent.com/98092825/156230382-9b932d6e-a931-4d40-824f-c94a085c1bfa.jpeg" width="200" height="400">
 
 
-Next commit plans: bug fixes, searchbar on the top of the main screen, animation integration (Lottie pod)
+Upcoming changes: bug fixes, search bar on the top of the main screen, animation integration (Lottie pod)
 
 
