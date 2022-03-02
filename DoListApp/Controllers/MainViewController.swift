@@ -36,24 +36,15 @@ class MainViewController: UIViewController {
     private let table: UITableView = {
         let table = UITableView(frame: .zero, style: .plain)
         table.register(TaskTableViewCell.nib(), forCellReuseIdentifier:TaskTableViewCell.identifier)
-       
         return table
     }()
     
-    
+
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(table)
-        view.addSubview(addButton)
-        table.delegate = self
-        table.dataSource = self
-        table.register(TableHeaderView.self, forHeaderFooterViewReuseIdentifier: "TableHeaderView")
-        addButton.addTarget(self, action: #selector(didTapAddButton), for: .touchUpInside)
         
-        view.backgroundColor = .systemBackground
-        table.backgroundColor = .systemBackground
         
         
         
@@ -68,6 +59,25 @@ class MainViewController: UIViewController {
                                  height: 60)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    
+        setupView()
+        fetchData()
+    }
+    
+    func setupView(){
+        
+        view.addSubview(table)
+        view.addSubview(addButton)
+        table.delegate = self
+        table.dataSource = self
+        table.register(TableHeaderView.self, forHeaderFooterViewReuseIdentifier: "TableHeaderView")
+        addButton.addTarget(self, action: #selector(didTapAddButton), for: .touchUpInside)
+        
+        view.backgroundColor = .systemBackground
+        table.backgroundColor = .systemBackground
+    }
     
     
     @objc func didTapAddButton(){
@@ -75,6 +85,7 @@ class MainViewController: UIViewController {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         let createTaskVc  = storyBoard.instantiateViewController(withIdentifier: "CreateTaskViewController") as! CreateTaskViewController
         createTaskVc.modalPresentationStyle = .fullScreen
+        createTaskVc.view.autoresizingMask = .flexibleHeight
         createTaskVc.callback = {
             self.fetchData()
             self.table.reloadData()
@@ -123,6 +134,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         let numberOfRows = models?.count ?? 0
         if numberOfRows == 0 {
             
@@ -134,12 +146,15 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             
                 return 0
             } else {
-               
+                
                 return numberOfRows
             }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        
+            
         let cell = tableView.dequeueReusableCell(withIdentifier: "TaskTableViewCell", for: indexPath) as! TaskTableViewCell
         cell.layer.cornerRadius = 10
         cell.backgroundColor = .systemBackground
@@ -148,7 +163,9 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         }
         cell.configure(with: models[indexPath.row])
         return cell
-    }
+        
+        }
+    
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
@@ -168,7 +185,9 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             do{
                try self?.context.save()
             }
-            catch{
+            catch let error as NSError{
+                
+                 print(error.localizedDescription)
                 
             }
             //data refetch

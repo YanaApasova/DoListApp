@@ -32,8 +32,8 @@ class CreateTaskViewController: UIViewController, UITextFieldDelegate {
         return header
     }()
     
-    private let textField: UITextField  = {
-        var textField = UITextField()
+    private let textField: TextField  = {
+        var textField = TextField()
         textField.placeholder = "Task text..."
         textField.clipsToBounds = true
         textField.layer.cornerRadius = 10
@@ -129,6 +129,9 @@ class CreateTaskViewController: UIViewController, UITextFieldDelegate {
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
+
+    
         headerView.layer.cornerRadius = 10
         headerView.backgroundColor = UIColor(patternImage: UIImage(named: "headerView2")!)
         headerView.frame = CGRect(x: 0,
@@ -225,9 +228,9 @@ class CreateTaskViewController: UIViewController, UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-        
         return true
     }
+    
     
     func getDate(date: Date) -> String {
         let formatter = DateFormatter()

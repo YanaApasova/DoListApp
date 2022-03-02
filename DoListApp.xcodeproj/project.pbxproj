@@ -24,6 +24,7 @@
 		2C2F642F27C7AADD0088E2D3 /* UserTasks+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2F642D27C7AADD0088E2D3 /* UserTasks+CoreDataProperties.swift */; };
 		2C2F643527C7CE4F0088E2D3 /* TableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2F643427C7CE4F0088E2D3 /* TableHeaderView.swift */; };
 		2C2F643A27C955E20088E2D3 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2F643927C955E20088E2D3 /* UIViewExtension.swift */; };
+		2C8E96BF27CF9138001425DA /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8E96BE27CF9138001425DA /* TextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,7 @@
 		2C2F642D27C7AADD0088E2D3 /* UserTasks+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserTasks+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2C2F643427C7CE4F0088E2D3 /* TableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableHeaderView.swift; sourceTree = "<group>"; };
 		2C2F643927C955E20088E2D3 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
+		2C8E96BE27CF9138001425DA /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +122,7 @@
 				2C2F642027C7A2DA0088E2D3 /* Controllers */,
 				2C2F642427C7A4570088E2D3 /* TableViewComponents */,
 				2C2F642927C7A9910088E2D3 /* CoreDataManager  */,
+				2C8E96BD27CF9114001425DA /* Models */,
 				2C2F643827C955C40088E2D3 /* Extensions */,
 				2C2F63F327C7A2C90088E2D3 /* Main.storyboard */,
 				2C2F63F927C7A2CB0088E2D3 /* Assets.xcassets */,
@@ -159,9 +162,9 @@
 		2C2F642427C7A4570088E2D3 /* TableViewComponents */ = {
 			isa = PBXGroup;
 			children = (
+				2C2F643427C7CE4F0088E2D3 /* TableHeaderView.swift */,
 				2C2F642527C7A4A10088E2D3 /* TaskTableViewCell.swift */,
 				2C2F642627C7A4A10088E2D3 /* TaskTableViewCell.xib */,
-				2C2F643427C7CE4F0088E2D3 /* TableHeaderView.swift */,
 			);
 			path = TableViewComponents;
 			sourceTree = "<group>";
@@ -181,6 +184,14 @@
 				2C2F643927C955E20088E2D3 /* UIViewExtension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		2C8E96BD27CF9114001425DA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2C8E96BE27CF9138001425DA /* TextField.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -316,6 +327,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C2F63F227C7A2C90088E2D3 /* MainViewController.swift in Sources */,
+				2C8E96BF27CF9138001425DA /* TextField.swift in Sources */,
 				2C2F642E27C7AADD0088E2D3 /* UserTasks+CoreDataClass.swift in Sources */,
 				2C2F63EE27C7A2C90088E2D3 /* AppDelegate.swift in Sources */,
 				2C2F643527C7CE4F0088E2D3 /* TableHeaderView.swift in Sources */,
