@@ -10,8 +10,7 @@ import CoreData
 
 class CreateTaskViewController: UIViewController, UITextFieldDelegate {
 
-    var userTasks: [UserTasks]?
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    var coreData = CoreDataManager()
     let category = [ "...", "Work", "Travelling", "Home", "Shopping", "Study", "Food"]
     var userCategory:String?
     var callback : (() -> Void)?
@@ -130,8 +129,6 @@ class CreateTaskViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-
-    
         headerView.layer.cornerRadius = 10
         headerView.backgroundColor = UIColor(patternImage: UIImage(named: "headerView2")!)
         headerView.frame = CGRect(x: 0,
@@ -175,7 +172,7 @@ class CreateTaskViewController: UIViewController, UITextFieldDelegate {
     
     @objc func keyboardWillHide(notification: NSNotification) {
       
-      self.view.frame.origin.y = 0
+        self.view.frame.origin.y = 0
     }
     
     @objc func goBack(){
@@ -210,7 +207,7 @@ class CreateTaskViewController: UIViewController, UITextFieldDelegate {
     
             let dateString = self!.getDate(date: self!.datePicker.date)
         
-            self?.insertValueWithKey(context: self!.context, taskText: text, date: dateString, category: userCategory)
+            self?.insertValueWithKey(context: self!.coreData.context, taskText: text, date: dateString, category: userCategory)
             
             self?.textField.text?.removeAll()
             self?.categoryPicker.reloadAllComponents()
@@ -261,11 +258,12 @@ class CreateTaskViewController: UIViewController, UITextFieldDelegate {
                   
                 }
             catch let error as NSError {
+                
             let ac = UIAlertController(title: "Something went wrong", message: "We were unable to save yout task, please try again \(error.localizedDescription)", preferredStyle: .alert)
                  ac.addAction(UIAlertAction(title: "Ok", style: .default))
                 self.present(ac, animated: true)
                 
-                        }
+            }
     
        }
     }

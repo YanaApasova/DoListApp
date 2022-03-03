@@ -6,24 +6,9 @@
 //
 
 import UIKit
-import CoreData
 
 class TaskTableViewCell: UITableViewCell {
     
-    
-    var items: [UserTasks]?
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    
-     func fetchData(){
-        
-        do {
-            let request = UserTasks.fetchRequest() as NSFetchRequest <UserTasks>
-            self.items =  try context.fetch(request)
-        } catch let error {
-            print(error.localizedDescription)
-        }
-        
-        }
     
     static var identifier = "TaskTableViewCell"
     

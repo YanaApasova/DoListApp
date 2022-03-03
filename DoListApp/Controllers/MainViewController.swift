@@ -10,12 +10,9 @@ import CoreData
 
 class MainViewController: UIViewController {
     
-    var models: [UserTasks]?
-    
-    // persistent container CoreData
-    
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    
+    var coreData = CoreDataManager()
+    let rowHeight = CGFloat(145)
+   
     
     
     private let addButton: UIButton = {
@@ -45,10 +42,8 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
-        
     }
+    
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -97,30 +92,14 @@ class MainViewController: UIViewController {
     // CoreData fetch
     
     func fetchData (){
+        coreData.fetchData()
         
-        do {
-            let request = UserTasks.fetchRequest() as NSFetchRequest <UserTasks>
-            let results : [NSManagedObject] = try context.fetch(request) as [UserTasks]
-             if (results.count > 0) {
-                 //Element exists
-                 self.models = try! context.fetch(request)
-                 
-             }
-             else {
-                 //Doesn't exist
-                 self.models = try context.fetch(request)
-             }
-            
-            
-        }
-           catch let error as NSError{
-            print(error.localizedDescription)
-      }
         DispatchQueue.main.async {
             self.table.reloadData()
     }
         
  }
+    
 }
 
 // MARK: TableView
@@ -129,13 +108,13 @@ class MainViewController: UIViewController {
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 145
+        return rowHeight
     }
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        let numberOfRows = models?.count ?? 0
+        let numberOfRows = coreData.models?.count ?? 0
         if numberOfRows == 0 {
             
             let emptyLabel = UILabel(frame: CGRect(x:0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height/4))
@@ -147,6 +126,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 return 0
             } else {
                 
+                tableView.backgroundView = .none
                 return numberOfRows
             }
     }
@@ -158,7 +138,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TaskTableViewCell", for: indexPath) as! TaskTableViewCell
         cell.layer.cornerRadius = 10
         cell.backgroundColor = .systemBackground
-        guard let models = models else {
+        guard let models = coreData.models else {
             return cell
         }
         cell.configure(with: models[indexPath.row])
@@ -177,13 +157,13 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             let ac = UIAlertController(title: "", message: "Do you want to delete?", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "Ok", style: .default){ [weak self] _ in
             
-            let task = self?.models![indexPath.row]
+                let task = self?.coreData.models![indexPath.row]
             // remove action
-            self?.context.delete((task ?? self?.models?[0])!) ?? nil
+                self?.coreData.context.delete((task ?? self?.coreData.models?[0])!) ?? nil
             
             // save data
             do{
-               try self?.context.save()
+                try self?.coreData.context.save()
             }
             catch let error as NSError{
                 
@@ -227,6 +207,19 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         return 150
     }
     
-   
+    //set table view animation
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.transform = CGAffineTransform(translationX: 0, y: rowHeight)
+                   UIView.animate(
+                    withDuration: 0.8,
+                       delay: 0.05 * Double(indexPath.row),
+                       usingSpringWithDamping: 0.6,
+                       initialSpringVelocity: 0.1,
+                       options: [.curveEaseInOut],
+                       animations: {
+                           cell.transform = CGAffineTransform(translationX: 0, y: 0)
+                   })
+    }
     
 }
