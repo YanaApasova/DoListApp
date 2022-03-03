@@ -11,8 +11,8 @@ import CoreData
 class CreateTaskViewController: UIViewController, UITextFieldDelegate {
 
     var coreData = CoreDataManager()
-    let category = [ "...", "Work", "Travelling", "Home", "Shopping", "Study", "Food"]
-    var userCategory:String?
+    let category = [ "Work", "Travelling", "Home", "Shopping", "Study", "Food"]
+    var userCategory: String?
     var callback : (() -> Void)?
     
     
@@ -20,11 +20,10 @@ class CreateTaskViewController: UIViewController, UITextFieldDelegate {
     
     private let headerView:UIView = {
         let header = UIView()
-        let lable = UILabel(frame: CGRect(x: 20, y: 150, width: 300, height: 50))
+        let lable = UILabel(frame: CGRect(x: header.frame.size.width + 10, y: header.frame.height + 30 , width: 300, height: 150))
         lable.text = "CREATE NEW TASK"
         lable.lineBreakMode = .byWordWrapping
         lable.font = .systemFont(ofSize: 30)
-        lable.contentMode = .scaleAspectFit
         header.addSubview(lable)
         header.clipsToBounds = true
         header.contentMode = .scaleAspectFit
@@ -96,7 +95,6 @@ class CreateTaskViewController: UIViewController, UITextFieldDelegate {
 
         view.backgroundColor = .systemBackground
         view.contentMode = .scaleAspectFit
-        categoryPicker.selectedRow(inComponent: 0)
         view.contentMode = .scaleAspectFit
         
         
@@ -134,31 +132,31 @@ class CreateTaskViewController: UIViewController, UITextFieldDelegate {
         headerView.frame = CGRect(x: 0,
                                   y: 0,
                                   width: view.bounds.width,
-                                  height: view.bounds.height/3)
+                                  height: view.bounds.height/3.5)
         categoryLabel.frame = CGRect(x: 10,
-                                     y: headerView.bottom + 20,
+                                     y: headerView.bottom + 10,
                                      width: view.frame.size.width - 20,
-                                     height: 30)
+                                     height: view.frame.height / 9)
         categoryPicker.frame = CGRect(x: 0,
                                       y: categoryLabel.bottom + 10,
                                       width: view.frame.size.width - 10,
-                                      height: 50)
+                                      height: view.frame.size.height / 11)
         textField.frame = CGRect(x: 10,
-                                 y: datePicker.bottom + 40,
+                                 y: datePicker.bottom + 20,
                                  width: view.frame.size.width - 20,
-                                 height: 100)
-        datePicker.frame = CGRect(x: 10,
-                                  y: categoryPicker.bottom + 20,
+                                 height: view.frame.size.height / 8)
+        datePicker.frame = CGRect(x: 0,
+                                  y: categoryPicker.bottom + 10,
                                   width: view.frame.size.width - 20,
-                                  height: 50)
-        saveButton.frame = CGRect(x: 75,
-                                  y: textField.bottom + 80,
-                                  width: view.frame.size.width - 150,
-                                  height: 50)
-        cancelButton.frame = CGRect(x: 75,
+                                  height: view.frame.size.height / 16)
+        saveButton.frame = CGRect(x: 25,
+                                  y: textField.bottom + 30,
+                                  width: view.frame.width - 50,
+                                  height: view.frame.size.height / 16)
+        cancelButton.frame = CGRect(x: 25,
                                     y: saveButton.bottom + 15,
-                                    width: view.frame.size.width - 150,
-                                    height: 50)
+                                    width: view.frame.width - 50,
+                                    height: view.frame.size.height / 16)
         
     }
     
@@ -185,6 +183,9 @@ class CreateTaskViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func saveTask() {
+        
+       let row = categoryPicker.selectedRow(inComponent: 0)
+        pickerView(categoryPicker, didSelectRow: row, inComponent:0)
         
         guard let text = self.textField.text  else {
             return
@@ -226,6 +227,12 @@ class CreateTaskViewController: UIViewController, UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if textField == textField {
+            //self.categoryPicker.selectRow(0, inComponent: 0, animated: true)
+           // self.pickerView(categoryPicker, didSelectRow: 0, inComponent: 0)
+        }
     }
     
     
@@ -299,9 +306,7 @@ extension CreateTaskViewController: UIPickerViewDelegate, UIPickerViewDataSource
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let selectedCategory = category[row]
         userCategory = selectedCategory
-        pickerView.selectedRow(inComponent: 0)
-       
-        
+    
     }
   
 }
