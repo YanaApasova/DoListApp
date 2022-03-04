@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreData
+import Lottie
 
 class CreateTaskViewController: UIViewController, UITextFieldDelegate {
 
@@ -14,13 +15,13 @@ class CreateTaskViewController: UIViewController, UITextFieldDelegate {
     let category = [ "Work", "Travelling", "Home", "Shopping", "Study", "Food"]
     var userCategory: String?
     var callback : (() -> Void)?
-    
+    private let animationView = AnimationView()
     
     
     
     private let headerView:UIView = {
         let header = UIView()
-        let lable = UILabel(frame: CGRect(x: header.frame.size.width + 10, y: header.frame.height + 30 , width: 300, height: 150))
+        let lable = UILabel(frame: CGRect(x: 10 , y: 20, width: 300, height: 150))
         lable.text = "CREATE NEW TASK"
         lable.lineBreakMode = .byWordWrapping
         lable.font = .systemFont(ofSize: 30)
@@ -140,11 +141,11 @@ class CreateTaskViewController: UIViewController, UITextFieldDelegate {
         categoryPicker.frame = CGRect(x: 0,
                                       y: categoryLabel.bottom + 10,
                                       width: view.frame.size.width - 10,
-                                      height: view.frame.size.height / 11)
+                                      height: view.frame.height / 11)
         textField.frame = CGRect(x: 10,
                                  y: datePicker.bottom + 20,
                                  width: view.frame.size.width - 20,
-                                 height: view.frame.size.height / 8)
+                                 height: view.frame.height / 9 )
         datePicker.frame = CGRect(x: 0,
                                   y: categoryPicker.bottom + 10,
                                   width: view.frame.size.width - 20,
@@ -157,19 +158,20 @@ class CreateTaskViewController: UIViewController, UITextFieldDelegate {
                                     y: saveButton.bottom + 15,
                                     width: view.frame.width - 50,
                                     height: view.frame.size.height / 16)
+        view.addSubview(animationView)
         
     }
     
     
     @objc func keyboardWillShow(notification: NSNotification) {
         guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
-           return
+            return
         }
         self.view.frame.origin.y = 0 - keyboardSize.height
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
-      
+        
         self.view.frame.origin.y = 0
     }
     
@@ -182,63 +184,64 @@ class CreateTaskViewController: UIViewController, UITextFieldDelegate {
         self.dismiss(animated: true)
     }
     
+    // setup animation with Lottie
+    
+    private  func setupAnimation(){
+        animationView.animation = Animation.named("done-animation")
+        animationView.contentMode = .center
+        animationView.frame = view.bounds
+        animationView.loopMode = .playOnce
+        animationView.play()
+        view.addSubview(animationView)
+     }
+    
     @objc func saveTask() {
         
-       let row = categoryPicker.selectedRow(inComponent: 0)
+        //  UIPicker data
+        let row = categoryPicker.selectedRow(inComponent: 0)
         pickerView(categoryPicker, didSelectRow: row, inComponent:0)
         
         guard let text = self.textField.text  else {
             return
-    }
+        }
+        
         if text.isEmpty {
             
-        let ac = UIAlertController(title: "", message: "Please, provide task text!", preferredStyle: .alert)
-        ac.addAction(UIAlertAction(title: "Ok", style: .default))
-        present(ac, animated: true)
+            let ac = UIAlertController(title: "", message: "Please, provide task text!", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "Ok", style: .default))
+            present(ac, animated: true)
             
         } else {
-        
-        
-        let ac = UIAlertController(title: "", message: "Task has been saved!", preferredStyle: .alert)
-        ac.addAction(UIAlertAction(title: "Ok", style: .default){ [weak self] action in
-         
-            guard let userCategory = self?.userCategory else {
-            return
-        }
-    
-            let dateString = self!.getDate(date: self!.datePicker.date)
-        
-            self?.insertValueWithKey(context: self!.coreData.context, taskText: text, date: dateString, category: userCategory)
             
-            self?.textField.text?.removeAll()
-            self?.categoryPicker.reloadAllComponents()
-            self?.datePicker.date = .now
-                self?.goBack()}
+            // UIAlertController has been replaced with animation
+            //let ac = UIAlertController(title: "", message: "Task has been saved!", preferredStyle: .alert)
+           // ac.addAction(UIAlertAction(title: "Ok", style: .default){ [weak self] action in
             
-        )
-    
-        
-           present(ac, animated: true)
+            setupAnimation()
             
-        }
-    }
-    
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        if textField == textField {
-            //self.categoryPicker.selectRow(0, inComponent: 0, animated: true)
-           // self.pickerView(categoryPicker, didSelectRow: 0, inComponent: 0)
+            guard let userCategory = userCategory else {
+                return
+            }
+            
+            let dateString = getDate(date: datePicker.date)
+            
+            insertValueWithKey(context: coreData.context, taskText: text, date: dateString, category: userCategory)
+            
+            textField.text?.removeAll()
+            categoryPicker.reloadAllComponents()
+            datePicker.date = .now
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: goBack)
+            
+          // present(ac, animated: true)
+            
         }
     }
     
+    // converting date into string
     
     func getDate(date: Date) -> String {
         let formatter = DateFormatter()
-            formatter.calendar = datePicker.calendar
+        formatter.calendar = datePicker.calendar
         formatter.dateStyle = .medium
         formatter.timeStyle = .none
         let dateString = formatter.string(from: datePicker.date)
@@ -248,34 +251,34 @@ class CreateTaskViewController: UIViewController, UITextFieldDelegate {
     // save task in CoreData
     
     func insertValueWithKey(context: NSManagedObjectContext,taskText: String, date: String, category: String){
-       
+        
         
         do {
-    
-           let paramsDescription = NSEntityDescription.entity(forEntityName: "UserTasks", in: context)
-           let params = NSManagedObject(entity: paramsDescription!, insertInto: context) as! UserTasks
-             params.taskText = taskText
-             params.date = date
-             params.category = category
-             
-              do {
-                   try context.save()
-                  
-                  // handling errors if operation wasn't sucessful
-                  
-                }
+            
+            let paramsDescription = NSEntityDescription.entity(forEntityName: "UserTasks", in: context)
+            let params = NSManagedObject(entity: paramsDescription!, insertInto: context) as! UserTasks
+            params.taskText = taskText
+            params.date = date
+            params.category = category
+            
+            do {
+                try context.save()
+                
+                // handling errors if operation wasn't sucessful
+                
+            }
             catch let error as NSError {
                 
-            let ac = UIAlertController(title: "Something went wrong", message: "We were unable to save yout task, please try again \(error.localizedDescription)", preferredStyle: .alert)
-                 ac.addAction(UIAlertAction(title: "Ok", style: .default))
+                let ac = UIAlertController(title: "Something went wrong", message: "We were unable to save yout task, please try again \(error.localizedDescription)", preferredStyle: .alert)
+                ac.addAction(UIAlertAction(title: "Ok", style: .default))
                 self.present(ac, animated: true)
                 
             }
-    
-       }
+            
+        }
     }
 }
-    
+
 // MARK: UIPicker delegate, datascource
 
 extension CreateTaskViewController: UIPickerViewDelegate, UIPickerViewDataSource {
@@ -306,7 +309,6 @@ extension CreateTaskViewController: UIPickerViewDelegate, UIPickerViewDataSource
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let selectedCategory = category[row]
         userCategory = selectedCategory
-    
     }
-  
+    
 }
