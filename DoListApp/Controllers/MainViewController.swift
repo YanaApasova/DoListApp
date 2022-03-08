@@ -12,7 +12,7 @@ class MainViewController: UIViewController {
     
     var coreData = CoreDataManager()
     let rowHeight = CGFloat(145)
-   
+    
     
     
     private let addButton: UIButton = {
@@ -29,14 +29,14 @@ class MainViewController: UIViewController {
         button.setImage(image, for: .normal)
         return button
     }()
-
+    
     private let table: UITableView = {
         let table = UITableView(frame: .zero, style: .plain)
         table.register(TaskTableViewCell.nib(), forCellReuseIdentifier:TaskTableViewCell.identifier)
         return table
     }()
     
-
+    
     
     
     override func viewDidLoad() {
@@ -56,7 +56,7 @@ class MainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-    
+        
         setupView()
         fetchData()
     }
@@ -87,7 +87,7 @@ class MainViewController: UIViewController {
         }
         present(createTaskVc,animated: true)
         
-            }
+    }
     
     // CoreData fetch
     
@@ -96,11 +96,11 @@ class MainViewController: UIViewController {
         
         DispatchQueue.main.async {
             self.table.reloadData()
-    }
+        }
         
- }
+    }
     
-
+    
     
 }
 
@@ -120,23 +120,23 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         if numberOfRows == 0 {
             
             let emptyLabel = UILabel(frame: CGRect(x:0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height/4))
-                emptyLabel.text = "You have no tasks"
-                emptyLabel.textAlignment = .center
-                tableView.backgroundView = emptyLabel
-                tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+            emptyLabel.text = "You have no tasks"
+            emptyLabel.textAlignment = .center
+            tableView.backgroundView = emptyLabel
+            tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
             
-                return 0
-            } else {
-                
-                tableView.backgroundView = .none
-                return numberOfRows
-            }
+            return 0
+        } else {
+            
+            tableView.backgroundView = .none
+            return numberOfRows
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         
-            
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "TaskTableViewCell", for: indexPath) as! TaskTableViewCell
         cell.layer.cornerRadius = 10
         cell.backgroundColor = .systemBackground
@@ -146,7 +146,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         cell.configure(with: models[indexPath.row])
         return cell
         
-        }
+    }
     
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -158,24 +158,24 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             
             let ac = UIAlertController(title: "", message: "Do you want to delete?", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "Ok", style: .default){ [weak self] _ in
-            
+                
                 let task = self?.coreData.models![indexPath.row]
-            // remove action
+                // remove action
                 self?.coreData.context.delete((task ?? self?.coreData.models?[0])!) ?? nil
-            
-            // save data
-            do{
-                try self?.coreData.context.save()
-            }
-            catch let error as NSError{
                 
-                 print(error.localizedDescription)
-                
-            }
-            //data refetch
+                // save data
+                do{
+                    try self?.coreData.context.save()
+                }
+                catch let error as NSError{
+                    
+                    print(error.localizedDescription)
+                    
+                }
+                //data refetch
                 self?.fetchData()
             })
-                
+            
             ac.addAction(UIAlertAction(title: "Cancel", style: .destructive))
             self?.present(ac, animated: true)
             completionHandler(true)
@@ -200,7 +200,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         return sectionHeader
-      
+        
     }
     
     
@@ -213,15 +213,15 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.transform = CGAffineTransform(translationX: 0, y: rowHeight)
-                   UIView.animate(
-                    withDuration: 0.8,
-                       delay: 0.05 * Double(indexPath.row),
-                       usingSpringWithDamping: 0.6,
-                       initialSpringVelocity: 0.1,
-                       options: [.curveEaseInOut],
-                       animations: {
-                           cell.transform = CGAffineTransform(translationX: 0, y: 0)
-                   })
+        UIView.animate(
+            withDuration: 0.8,
+            delay: 0.05 * Double(indexPath.row),
+            usingSpringWithDamping: 0.6,
+            initialSpringVelocity: 0.1,
+            options: [.curveEaseInOut],
+            animations: {
+                cell.transform = CGAffineTransform(translationX: 0, y: 0)
+            })
     }
     
 }

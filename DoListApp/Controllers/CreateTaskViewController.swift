@@ -9,14 +9,13 @@ import UIKit
 import CoreData
 import Lottie
 
-class CreateTaskViewController: UIViewController, UITextFieldDelegate {
-
+class CreateTaskViewController: UIViewController, UITextFieldDelegate, UIAnimatable {
+    
     var coreData = CoreDataManager()
     let category = [ "Work", "Travelling", "Home", "Shopping", "Study", "Food"]
     var userCategory: String?
     var callback : (() -> Void)?
-    private let animationView = AnimationView()
-    
+  
     
     
     private let headerView:UIView = {
@@ -97,6 +96,7 @@ class CreateTaskViewController: UIViewController, UITextFieldDelegate {
         view.backgroundColor = .systemBackground
         view.contentMode = .scaleAspectFit
         view.contentMode = .scaleAspectFit
+        self.hideKeyboardWhenTappedAround() 
         
         
         textField.delegate = self
@@ -122,7 +122,10 @@ class CreateTaskViewController: UIViewController, UITextFieldDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(CreateTaskViewController.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    
+    override func resignFirstResponder() -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
     
 
     override func viewDidLayoutSubviews() {
@@ -158,7 +161,7 @@ class CreateTaskViewController: UIViewController, UITextFieldDelegate {
                                     y: saveButton.bottom + 15,
                                     width: view.frame.width - 50,
                                     height: view.frame.size.height / 16)
-        view.addSubview(animationView)
+      //  view.addSubview(animationView)
         
     }
     
@@ -175,25 +178,15 @@ class CreateTaskViewController: UIViewController, UITextFieldDelegate {
         self.view.frame.origin.y = 0
     }
     
+    
     @objc func goBack(){
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         let nextViewController = storyBoard.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController
         nextViewController.modalPresentationStyle = .fullScreen
         callback?()
-        
         self.dismiss(animated: true)
     }
     
-    // setup animation with Lottie
-    
-    private  func setupAnimation(){
-        animationView.animation = Animation.named("done-animation")
-        animationView.contentMode = .center
-        animationView.frame = view.bounds
-        animationView.loopMode = .playOnce
-        animationView.play()
-        view.addSubview(animationView)
-     }
     
     @objc func saveTask() {
         
@@ -217,7 +210,7 @@ class CreateTaskViewController: UIViewController, UITextFieldDelegate {
             //let ac = UIAlertController(title: "", message: "Task has been saved!", preferredStyle: .alert)
            // ac.addAction(UIAlertAction(title: "Ok", style: .default){ [weak self] action in
             
-            setupAnimation()
+            showAnimation(animation: "done-animation")
             
             guard let userCategory = userCategory else {
                 return

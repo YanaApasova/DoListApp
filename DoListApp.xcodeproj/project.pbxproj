@@ -24,8 +24,12 @@
 		2C2F642F27C7AADD0088E2D3 /* UserTasks+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2F642D27C7AADD0088E2D3 /* UserTasks+CoreDataProperties.swift */; };
 		2C2F643527C7CE4F0088E2D3 /* TableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2F643427C7CE4F0088E2D3 /* TableHeaderView.swift */; };
 		2C2F643A27C955E20088E2D3 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2F643927C955E20088E2D3 /* UIViewExtension.swift */; };
+		2C3A000527D78C30002FBA1A /* UIAnimatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3A000427D78C30002FBA1A /* UIAnimatable.swift */; };
 		2C68FE1A27D2974E004A3E90 /* CustomUIAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C68FE1927D2974E004A3E90 /* CustomUIAlert.swift */; };
 		2C68FE1C27D29A20004A3E90 /* done-animation.json in Resources */ = {isa = PBXBuildFile; fileRef = 2C68FE1B27D29A20004A3E90 /* done-animation.json */; };
+		2C68FE2027D393EC004A3E90 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C68FE1F27D393EC004A3E90 /* IntroViewController.swift */; };
+		2C68FE2227D39573004A3E90 /* intro.json in Resources */ = {isa = PBXBuildFile; fileRef = 2C68FE2127D39573004A3E90 /* intro.json */; };
+		2C68FE2527D399B8004A3E90 /* KeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C68FE2427D399B8004A3E90 /* KeyboardViewController.swift */; };
 		2C8E96BF27CF9138001425DA /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8E96BE27CF9138001425DA /* TextField.swift */; };
 		2C8E96C527D0D2C4001425DA /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8E96C427D0D2C4001425DA /* CoreDataManager.swift */; };
 		9C89534C098FCB8715C77E29 /* libPods-DoListApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 26C3EB8589C624EC7DD2C36C /* libPods-DoListApp.a */; };
@@ -71,8 +75,12 @@
 		2C2F642D27C7AADD0088E2D3 /* UserTasks+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserTasks+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2C2F643427C7CE4F0088E2D3 /* TableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableHeaderView.swift; sourceTree = "<group>"; };
 		2C2F643927C955E20088E2D3 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
+		2C3A000427D78C30002FBA1A /* UIAnimatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAnimatable.swift; sourceTree = "<group>"; };
 		2C68FE1927D2974E004A3E90 /* CustomUIAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUIAlert.swift; sourceTree = "<group>"; };
 		2C68FE1B27D29A20004A3E90 /* done-animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "done-animation.json"; sourceTree = "<group>"; };
+		2C68FE1F27D393EC004A3E90 /* IntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
+		2C68FE2127D39573004A3E90 /* intro.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = intro.json; sourceTree = "<group>"; };
+		2C68FE2427D399B8004A3E90 /* KeyboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardViewController.swift; sourceTree = "<group>"; };
 		2C8E96BE27CF9138001425DA /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		2C8E96C427D0D2C4001425DA /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		5612C0BD4879A9297683BF96 /* Pods-DoListApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DoListApp.debug.xcconfig"; path = "Target Support Files/Pods-DoListApp/Pods-DoListApp.debug.xcconfig"; sourceTree = "<group>"; };
@@ -138,6 +146,7 @@
 				2C2F642927C7A9910088E2D3 /* CoreData */,
 				2C8E96BD27CF9114001425DA /* Models */,
 				2C2F643827C955C40088E2D3 /* Extensions */,
+				2C3A000327D78C02002FBA1A /* Protocols */,
 				2C2F63F327C7A2C90088E2D3 /* Main.storyboard */,
 				2C2F63F927C7A2CB0088E2D3 /* Assets.xcassets */,
 				2C2F63FB27C7A2CB0088E2D3 /* LaunchScreen.storyboard */,
@@ -169,6 +178,7 @@
 			children = (
 				2C2F63F127C7A2C90088E2D3 /* MainViewController.swift */,
 				2C2F642227C7A33A0088E2D3 /* CreateTaskViewController.swift */,
+				2C68FE1F27D393EC004A3E90 /* IntroViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -197,13 +207,23 @@
 			isa = PBXGroup;
 			children = (
 				2C2F643927C955E20088E2D3 /* UIViewExtension.swift */,
+				2C68FE2427D399B8004A3E90 /* KeyboardViewController.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		2C3A000327D78C02002FBA1A /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				2C3A000427D78C30002FBA1A /* UIAnimatable.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 		2C68FE1527D26175004A3E90 /* Animation  */ = {
 			isa = PBXGroup;
 			children = (
+				2C68FE2127D39573004A3E90 /* intro.json */,
 				2C68FE1B27D29A20004A3E90 /* done-animation.json */,
 			);
 			path = "Animation ";
@@ -344,6 +364,7 @@
 				2C2F642827C7A4A10088E2D3 /* TaskTableViewCell.xib in Resources */,
 				2C2F63FD27C7A2CB0088E2D3 /* LaunchScreen.storyboard in Resources */,
 				2C2F63FA27C7A2CB0088E2D3 /* Assets.xcassets in Resources */,
+				2C68FE2227D39573004A3E90 /* intro.json in Resources */,
 				2C2F63F527C7A2C90088E2D3 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -395,6 +416,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C2F63F227C7A2C90088E2D3 /* MainViewController.swift in Sources */,
+				2C68FE2527D399B8004A3E90 /* KeyboardViewController.swift in Sources */,
 				2C8E96BF27CF9138001425DA /* TextField.swift in Sources */,
 				2C2F642E27C7AADD0088E2D3 /* UserTasks+CoreDataClass.swift in Sources */,
 				2C2F63EE27C7A2C90088E2D3 /* AppDelegate.swift in Sources */,
@@ -402,7 +424,9 @@
 				2C2F643A27C955E20088E2D3 /* UIViewExtension.swift in Sources */,
 				2C68FE1A27D2974E004A3E90 /* CustomUIAlert.swift in Sources */,
 				2C8E96C527D0D2C4001425DA /* CoreDataManager.swift in Sources */,
+				2C3A000527D78C30002FBA1A /* UIAnimatable.swift in Sources */,
 				2C2F642727C7A4A10088E2D3 /* TaskTableViewCell.swift in Sources */,
+				2C68FE2027D393EC004A3E90 /* IntroViewController.swift in Sources */,
 				2C2F63F827C7A2C90088E2D3 /* DoListApp.xcdatamodeld in Sources */,
 				2C2F63F027C7A2C90088E2D3 /* SceneDelegate.swift in Sources */,
 				2C2F642327C7A33A0088E2D3 /* CreateTaskViewController.swift in Sources */,
